@@ -25,11 +25,11 @@ mycursor = mydb.cursor(buffered=True)
 app = Flask(__name__)
 
 
-@app.route('/exercise') 
+@app.route('/api/') 
 def index():     
     return render_template('index.html')
 
-@app.route('/exercise/upload', methods=['POST'])
+@app.route('/api/upload', methods=['POST'])
 def upload():
 
     uploadFile = request.files['selectFile']
@@ -48,7 +48,7 @@ def upload():
         "description": fileContent
     })
 
-@app.route('/exercise/loading', methods=["GET"])
+@app.route('/api/loading', methods=["GET"])
 def loading():
     mycursor.execute("Select * FROM updateTable")
     s3File = mycursor.fetchall()

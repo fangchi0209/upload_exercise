@@ -29,7 +29,7 @@ app = Flask(__name__)
 def index():     
     return render_template('index.html')
 
-@app.route('/exercise/upload', methods=['POST'])
+@app.route('/upload', methods=['POST'])
 def upload():
 
     uploadFile = request.files['selectFile']
@@ -48,7 +48,7 @@ def upload():
         "description": fileContent
     })
 
-@app.route('/exercise/loading', methods=["GET"])
+@app.route('/loading', methods=["GET"])
 def loading():
     mycursor.execute("Select * FROM updateTable")
     s3File = mycursor.fetchall()

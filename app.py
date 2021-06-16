@@ -25,7 +25,7 @@ mycursor = mydb.cursor(buffered=True)
 app = Flask(__name__)
 
 
-@app.route('/api/') 
+@app.route('/api') 
 def index():     
     return render_template('index.html')
 

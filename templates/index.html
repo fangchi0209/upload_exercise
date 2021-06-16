@@ -7,6 +7,11 @@
 <body>
     <style>
         @import url(//fonts.googleapis.com/earlyaccess/notosanstc.css);
+
+        body {
+            font-family: Noto Sans TC;
+        }
+
         #uploadSection {
             margin: 20px 0px;
         }
@@ -45,7 +50,7 @@
         getProcess()
 
         async function getProcess() {
-            await fetch ("/exercise/loading")
+            await fetch ("/loading")
             .then(response => response.json())
             .then(data => {
                 console.log(data.allFile)
@@ -84,7 +89,7 @@
 
             console.log(formData)
 
-            await fetch('/exercise/upload', {
+            await fetch('/upload', {
                     method: 'POST',
                     body: formData,
                 })

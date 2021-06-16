@@ -50,7 +50,7 @@
         getProcess()
 
         async function getProcess() {
-            await fetch ("/exercise/")
+            await fetch ("/exercise/loading")
             .then(response => response.json())
             .then(data => {
                 console.log(data.allFile)

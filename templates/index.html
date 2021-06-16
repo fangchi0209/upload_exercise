@@ -1,0 +1,108 @@
+<html>
+
+<head>
+    <title>Upload</title>
+</head>
+
+<body>
+    <style>
+        #uploadSection {
+            margin: 20px 0px;
+        }
+
+        .underline {
+            border-bottom: 1px solid gray;
+            padding: 10px 0px 30px 0px;
+        }
+
+        img {
+            width: 300px;
+            height: 300px;
+        }
+    </style>
+    <header>
+        圖片發表
+    </header>
+    <div id="uploadSection">
+        <form enctype="multipart/form-data">
+            文字內容<input type="text" id="fileDes"><br> 上傳圖片
+            <input type="file" name="photo" id="uploadFile"><br>
+            <button onclick="uploadProcess(event)">sent</button>
+        </form>
+    </div>
+
+    <ul id="myList"></ul>
+
+    <script>
+
+        getProcess()
+
+        async function getProcess() {
+            await fetch ("/loading")
+            .then(response => response.json())
+            .then(data => {
+                console.log(data.allFile)
+                let CFall = data.allFile
+
+                for (let n = 0; n < CFall.length; n++){
+                    let dataContent = CFall[n].CFimageContent
+                    let content = document.createTextNode(dataContent)
+                    let myList = document.getElementById("myList")
+                    let div_tag = document.createElement("div")
+                    let content_tag = document.createElement("p")
+                    let img_tag = document.createElement("img")
+                    div_tag.classList.add("underline")
+                    
+                    img_tag.src = CFall[n].CFimageName
+                    content_tag.appendChild(content)
+                    div_tag.appendChild(content_tag)
+                    div_tag.appendChild(img_tag)
+                    myList.appendChild(div_tag)
+
+                    myList.insertBefore(div_tag, myList.childNodes[0])
+                }
+            })
+        }
+
+        async function uploadProcess(e) {
+            e.preventDefault()
+
+            let selectedFile = document.getElementById('uploadFile').files[0];
+            let selectedWord = document.getElementById('fileDes').value
+
+
+            let formData = new FormData();
+            formData.append('selectFile', selectedFile); // 設定上傳的檔案
+            formData.append('fileDescription', selectedWord)
+
+            console.log(formData)
+
+            await fetch('/upload', {
+                    method: 'POST',
+                    body: formData,
+                })
+                .then(response => response.json())
+                .then(json => {
+                    console.log(json)
+                    let myList = document.getElementById("myList")
+                    let content = document.createTextNode(json.description)
+                    let div_tag = document.createElement("div")
+                    let content_tag = document.createElement("p")
+                    let img_tag = document.createElement("img")
+                    div_tag.classList.add("underline")
+
+                    img_tag.src = json.imageFile
+                    content_tag.appendChild(content)
+                    div_tag.appendChild(content_tag)
+                    div_tag.appendChild(img_tag)
+                    myList.appendChild(div_tag)                    
+                                    
+                    myList.insertBefore(div_tag, myList.childNodes[0])
+
+                })
+        }
+     </script>
+
+</body>
+
+</html>

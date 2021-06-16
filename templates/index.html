@@ -50,7 +50,7 @@
         getProcess()
 
         async function getProcess() {
-            await fetch ("/loading")
+            await fetch ("/exercise/loading")
             .then(response => response.json())
             .then(data => {
                 console.log(data.allFile)
@@ -89,7 +89,7 @@
 
             console.log(formData)
 
-            await fetch('/upload', {
+            await fetch('/exercise/upload', {
                     method: 'POST',
                     body: formData,
                 })
